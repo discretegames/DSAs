@@ -1,4 +1,4 @@
-from sortutil import swap, getkey
+from DSAs.sorting.sortutil import swap, getkey
 
 
 def bubblesort(arr, key=None):  # In place. Stable.
