@@ -6,3 +6,4 @@ dsas.egg-info/
 dist/
 build/
 .idea/
+.tox/

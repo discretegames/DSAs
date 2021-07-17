@@ -1,1 +1,3 @@
-from . import bubblesort
+
+# __all__ = "other bubblesort".split()
+from ._bubblesort import bubblesort, other
