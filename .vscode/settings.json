@@ -1,0 +1,4 @@
+{
+	"cSpell.words": ["DSAs"],
+	"python.analysis.extraPaths": ["./src/DSAs/sorting"]
+}
