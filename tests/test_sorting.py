@@ -1,5 +1,6 @@
 """Test suite for DSAs.sorting."""
 
+import tutil
 from itertools import permutations, product
 import unittest
 import random
@@ -28,7 +29,7 @@ class TestSorting(unittest.TestCase):
         return sort_checker
 
     def get_modifiers_and_keys(self):
-        mods = [int, float, bool,
+        mods = [int, float, bool,  # todo bool and others may make unstable sorts fail tests
                 lambda x: x,
                 lambda x: -x,
                 lambda x: 1,
@@ -79,22 +80,15 @@ class TestSorting(unittest.TestCase):
     def random_sort_tests(self, sorter, seed=None):
         random.seed(seed)
         checker = self.get_sort_checker(sorter)
-        modifiers, keys = self.get_modifiers_and_keys()
 
-        def random_arr(max_length, minimum, maximum):
-            length = random.randint(0, max_length + 1)
-            return [random.randint(minimum, maximum) for _ in range(length)]
+        def random_tests(min_length, max_length, min_value, max_value, times=10):
+            for _ in range(times):
+                checker(tutil.random_arr(min_length, max_length, min_value, max_value))
 
-        def random_tests(max_length, minimum, maximum, times=10):
-            times = 2
-            for modifier, key, _ in product(modifiers, keys, range(times)):
-                arr = random_arr(max_length, minimum, maximum)
-                checker(list(map(modifier, arr)), key=key)
-
-        # TODO likely remove modifier and keys since too slow here and unnecessary
-        # random_tests(10, -20, 20)
-        # random_tests(100, -20, 20)
-        # random_tests(1000, -20, 2, 100)
+        random_tests(0, 10, 0, 100, 20)
+        random_tests(0, 100, -20, 20, 20)
+        random_tests(500, 1000, -10, 10, 5)
+        random_tests(500, 1000, -10**9, 10**9, 5)
 
     def all_sort_tests(self, sorter):
         self.basic_sort_tests(sorter)
