@@ -2,7 +2,7 @@ MANIFEST
 desktop.ini
 tempCodeRunnerFile.py
 __pycache__/
-dsas.egg-info/
+DSAs.egg-info/
 dist/
 build/
 .idea/
