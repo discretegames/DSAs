@@ -3,7 +3,7 @@
 import os
 import sys
 import random
-# Appending src lets test files be run in the VSCode debugger for quick testing.
+# Appending src lets test files to be run in the VSCode debugger for quick testing.
 sys.path.append(f'{os.path.dirname(__file__)}/../src')
 
 

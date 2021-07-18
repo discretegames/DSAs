@@ -1,31 +1,26 @@
 """Test suite for DSAs.sorting."""
 
-import tutil  # Must import before DSAs so sys path is correct for local debugging.
+import tutil  # Must import tutil before DSAs for VSCode debugging to work.
 import DSAs.sorting as sorting
 from itertools import permutations, product
 import unittest
 
 
 class TestSorting(unittest.TestCase):
-    def get_sort_checker(self, sorter):
+    def get_sort_checker(self, sorter):  # todo probably update to allow not-in-place sorters
         def sort_checker(*arrs, key=None, reverse=False):
             for arr in arrs:
                 copy = arr.copy()
                 expected = sorted(copy, key=key, reverse=reverse)
                 sorter(copy, key=key, reverse=reverse)
-                if copy != expected:
-                    print(999)
-                    pass
-
                 self.assertEqual(copy, expected)
         return sort_checker
 
     def get_modifiers_and_keys(self):
-        mods = [int, float, bool,  # todo bool and others may make unstable sorts fail tests
+        mods = [int, float,  # todo bool and others may make unstable sorts fail tests
                 lambda x: x,
                 lambda x: -x,
-                lambda x: 1,
-                lambda x: x // 10,
+                lambda x: x / 10.0,
                 lambda x: x + 100,
                 lambda x: x - 100,
                 lambda x: x**2,
@@ -56,7 +51,7 @@ class TestSorting(unittest.TestCase):
         self.assertEqual(sort([1, 2, 3, 4]), [1, 2, 3, 4])
         self.assertEqual(sort([4, 3, 2, 1]), [1, 2, 3, 4])
 
-    def thorough_sort_tests(self, sorter, max_length=6):
+    def thorough_sort_tests(self, sorter, max_length=5):
         checker = self.get_sort_checker(sorter)
         modifiers, keys = self.get_modifiers_and_keys()
         count = 0
@@ -86,8 +81,16 @@ class TestSorting(unittest.TestCase):
         self.thorough_sort_tests(sorter)
         self.random_sort_tests(sorter)
 
+    # todo random for unstable sorts
+
+    # todo stability test
+
     def test_bubblesort(self):
         self.all_sort_tests(sorting.bubblesort)
+
+    def test_selectionsort(self):
+        self.basic_sort_tests(sorting.selectionsort)
+        self.thorough_sort_tests(sorting.selectionsort)
 
 
 if __name__ == "__main__":

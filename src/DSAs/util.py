@@ -1,3 +1,5 @@
+"""Utility methods and classes for DSAs."""
+
 from functools import total_ordering, wraps
 
 
@@ -22,7 +24,7 @@ class Sortable:
             return self.key < other.key
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({self.value}, {self.key})"
+        return f"{'R' * self.reverse}{self.__class__.__name__}({self.value}, {self.key})"
 
 
 def key_and_reverse(in_place=True):
