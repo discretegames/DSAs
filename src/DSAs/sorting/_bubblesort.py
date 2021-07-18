@@ -2,6 +2,7 @@ from ..util import swap, getkey
 
 
 def bubblesort(arr, key=None):
+    """Bubble sort. In place. Stable. O(N^2) time. O(1) space."""
     key = getkey(key)
     for i in range(len(arr)):
         for j in range(len(arr) - i - 1):

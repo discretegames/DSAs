@@ -5,7 +5,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Run tests with tox",
+			"name": "Run tox Tests",
 			"type": "python",
 			"request": "launch",
 			"program": "${workspaceFolder}/runtox.py",
