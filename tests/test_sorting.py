@@ -15,11 +15,15 @@ class TestSorting(unittest.TestCase):
     import DSAs.sorting as sorting
 
     def get_sort_checker(self, sorter):
-        def sort_checker(*arrs, key=None):
+        def sort_checker(*arrs, key=None, reverse=False):
             for arr in arrs:
                 copy = arr.copy()
-                expected = sorted(copy, key=key)
-                sorter(copy, key=key)
+                expected = sorted(copy, key=key, reverse=reverse)
+                sorter(copy, key=key, reverse=reverse)
+                if copy != expected:
+                    print(999)
+                    pass
+
                 self.assertEqual(copy, expected)
         return sort_checker
 
@@ -63,12 +67,12 @@ class TestSorting(unittest.TestCase):
         checker = self.get_sort_checker(sorter)
         modifiers, keys = self.get_modifiers_and_keys()
         count = 0
-        for modifier, key, length in product(modifiers, keys, range(max_length)):
+        for modifier, key, length, reverse in product(modifiers, keys, range(max_length), [True, False]):
             for r in range(length):
                 perms = map(list, permutations(range(1, length + 1), r))
                 arrs = [list(map(modifier, arr)) for arr in perms]
                 count += len(arrs)
-                checker(*arrs, key=key)
+                checker(*arrs, key=key, reverse=reverse)
         print(f"Thoroughly tested {count} lists.")
         return count
 
