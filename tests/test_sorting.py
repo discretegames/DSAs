@@ -1,20 +1,12 @@
 """Test suite for DSAs.sorting."""
 
-import tutil
+import tutil  # Must import before DSAs so sys path is correct for local debugging.
+import DSAs.sorting as sorting
 from itertools import permutations, product
 import unittest
-import random
-import sys
-import os
-
-# Needed to allow direct debugging in VSCode.
-sys.path.append(f'{os.path.dirname(__file__)}/../src')
-# TODO put elsewhere or rethink
 
 
 class TestSorting(unittest.TestCase):
-    import DSAs.sorting as sorting
-
     def get_sort_checker(self, sorter):
         def sort_checker(*arrs, key=None, reverse=False):
             for arr in arrs:
@@ -74,11 +66,10 @@ class TestSorting(unittest.TestCase):
                 arrs = [list(map(modifier, arr)) for arr in perms]
                 count += len(arrs)
                 checker(*arrs, key=key, reverse=reverse)
-        print(f"Thoroughly tested {count} lists.")
+        # print(f"Thoroughly tested {count} lists.")
         return count
 
-    def random_sort_tests(self, sorter, seed=None):
-        random.seed(seed)
+    def random_sort_tests(self, sorter):
         checker = self.get_sort_checker(sorter)
 
         def random_tests(min_length, max_length, min_value, max_value, times=10):
@@ -96,7 +87,7 @@ class TestSorting(unittest.TestCase):
         self.random_sort_tests(sorter)
 
     def test_bubblesort(self):
-        self.all_sort_tests(self.sorting.bubblesort)
+        self.all_sort_tests(sorting.bubblesort)
 
 
 if __name__ == "__main__":
