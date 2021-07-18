@@ -1,1 +1,1 @@
-{ "python.formatting.autopep8Args": ["--ignore=E731"] }
+{ "python.formatting.autopep8Args": ["--ignore=E731", "--max-line-length=120"] }
