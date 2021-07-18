@@ -5,6 +5,13 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Run tests with tox",
+			"type": "python",
+			"request": "launch",
+			"program": "${workspaceFolder}/runtox.py",
+			"console": "integratedTerminal"
+		},
+		{
 			"name": "Python: Current File",
 			"type": "python",
 			"request": "launch",

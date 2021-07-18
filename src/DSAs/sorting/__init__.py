@@ -1,3 +1,3 @@
+"""Various sorting algorithms."""
 
-# __all__ = "other bubblesort".split()
-from ._bubblesort import bubblesort, other
+from ._bubblesort import bubblesort
