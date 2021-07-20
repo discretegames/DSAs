@@ -92,28 +92,25 @@ class TestSorting(unittest.TestCase):
         else:
             sorter = sorting_algorithm
 
-
-
         # if unstable
         # make it stable and then test sorting ability vs built in sorted
         # if stable
         # test sorting ability
         # test stability claim
 
-
-
-
         if not stable:
             pass
 
     def test_bubblesort(self):
-        self.sorter_test(sorting.bubblesort, True, True)
+        #self.sorter_test(sorting.bubblesort, True, True)
 
-        # self.all_sort_tests(sorting.bubblesort)
+        self.all_sort_tests(sorting.bubblesort)
 
     def test_selectionsort(self):
         self.basic_sort_tests(sorting.selectionsort)
         self.thorough_sort_tests(sorting.selectionsort)
+
+    # todo test decorators
 
 
 if __name__ == "__main__":

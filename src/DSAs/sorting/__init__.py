@@ -1,4 +1,5 @@
 """Various sorting algorithms."""
 
-from ._bubblesort import bubblesort
-from ._selectionsort import selectionsort
+from .bubblesort import bubblesort
+from .selectionsort import selectionsort
+from .sorting_util import swap, key_and_reverse, stabilize, in_place, not_in_place
