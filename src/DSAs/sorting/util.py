@@ -53,10 +53,12 @@ def stabilize(in_place=True):
         """Decorator that makes a sorting algorithm stable."""
         @wraps(sorting_algorithm)
         def wrapper(arr, *args, **kwargs):
-            if 'key' in kwargs:  # Patch in proper key that takes index into account.
+            to_sort = [(value, i) for i, value in enumerate(arr)]
+            if kwargs.get('key'):
                 key = kwargs['key']
                 kwargs['key'] = lambda x: (key(x[0]), x[1])
-            to_sort = [(value, i) for i, value in enumerate(arr)]
+            if kwargs.get('reverse'):
+                to_sort[:] = [(value, len(to_sort) - i - 1) for value, i in to_sort]
             result = sorting_algorithm(to_sort, *args, **kwargs)
             if in_place:
                 arr[:] = [value for value, _ in to_sort]
