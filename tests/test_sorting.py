@@ -6,9 +6,9 @@ import DSAs.sorting as sorting
 from itertools import product
 
 thoroughness = 5  # Higher is more thorough but exponentially slower. Keep at 4 minimum.
-test_maps = (bool,
+test_maps = (int,
+             bool,
              float,
-             lambda x: x,
              lambda x: -x,
              lambda x: x // 2,
              lambda x: x**2,
@@ -35,7 +35,6 @@ def sorter_test(sorter, stable, in_place):
     return tester
 
 
-# todo make sure some gaps fail as well, like [2],
 def gapped_sorter_test(sorter, stable, good_gaps, bad_gaps):
     def tester(self):
         def call_gapped_sorter(gaps):
@@ -156,12 +155,16 @@ class TestSorting(unittest.TestCase):
         confirm_properties(unstable_ip_sorter, False, True)
         confirm_properties(unstable_nip_sorter, False, False)
 
-    test_bubblesort = sorter_test(sorting.bubblesort, True, True)
-    test_cocktailsort = sorter_test(sorting.cocktailsort, True, True)
-    test_insertionsort = sorter_test(sorting.insertionsort, True, True)
-    test_selectionsort = sorter_test(sorting.selectionsort, False, True)
-    test_shellsort = gapped_sorter_test(sorting.shellsort, False, (None, [2, 1], [2, 1, 2], [100, 1]), ([2], [100]))
-    test_stable_shellsort = gapped_sorter_test(sorting.shellsort, True, ([1], [1, 2]), ())
+    test_combsort = gapped_sorter_test(sorting.combsort, False, (None,), ())
+    # test_stable_combsort = gapped_sorter_test(sorting.combsort, True, ([1], [1, 2]), ())
+
+    # test_bubblesort = sorter_test(sorting.bubblesort, True, True)
+    # test_cocktailsort = sorter_test(sorting.cocktailsort, True, True)
+    # test_insertionsort = sorter_test(sorting.insertionsort, True, True)
+    # test_selectionsort = sorter_test(sorting.selectionsort, False, True)
+    # test_shellsort = gapped_sorter_test(sorting.shellsort, False, (None, [2, 1], [2, 1, 2], [100, 1]), ([2], [100]))
+    # test_stable_shellsort = gapped_sorter_test(sorting.shellsort, True, ([1], [1, 2]), ())
+    # TODO uncomment
 
 
 if __name__ == "__main__":

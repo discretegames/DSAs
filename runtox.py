@@ -1,4 +1,4 @@
-"""File to run tox since idk how to make launch.json do it directly."""
+"""File to run targeted tox tests."""
 
 from subprocess import run
 

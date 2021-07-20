@@ -90,3 +90,9 @@ def not_in_place(sorting_algorithm):
 
 def get_gaps(length, shrink_factor):
     gaps = []
+    while not gaps or gaps[-1] != 1:
+        length /= shrink_factor
+        gap = max(int(length), 1)
+        if not gaps or gap != gaps[-1]:  # Avoid duplicate gaps for shrink_factors close to 1.
+            gaps.append(gap)
+    return gaps
