@@ -1,6 +1,7 @@
-from ..util import swap, key_and_reverse
+from ..util import stabilize, swap, key_and_reverse
 
 
+@stabilize()
 @key_and_reverse()
 def selectionsort(arr):
     """Selection sort. In place. Unstable. O(N^2) time. O(1) space."""

@@ -7,6 +7,17 @@ import unittest
 
 
 class TestSorting(unittest.TestCase):
+    def basic_sort_tests(self, sorter):
+        self.assertEqual(sorter([]), [])
+        self.assertEqual(sorter([1, 2]), [1, 2])
+        self.assertEqual(sorter([2, 1]), [1, 2])
+        self.assertEqual(sorter(["A", "B"]), ["A", "B"])
+        self.assertEqual(sorter(["B", "A"]), ["A", "B"])
+        self.assertEqual(sorter(["10", "2"]), ["10", "2"])
+        self.assertEqual(sorter(["2", "10"]), ["10", "2"])
+        self.assertEqual(sorter([1, 2, 3, 4]), [1, 2, 3, 4])
+        self.assertEqual(sorter([4, 3, 2, 1]), [1, 2, 3, 4])
+
     def get_sort_checker(self, sorter):  # todo probably update to allow not-in-place sorters
         def sort_checker(*arrs, key=None, reverse=False):
             for arr in arrs:
@@ -35,21 +46,6 @@ class TestSorting(unittest.TestCase):
                 lambda x: str(x)[::-1]
                 ] + mods
         return mods, keys
-
-    def basic_sort_tests(self, sorter):
-        def sort(arr):
-            copy = arr.copy()
-            sorter(copy)
-            return copy
-        self.assertEqual(sort([]), [])
-        self.assertEqual(sort([1, 2]), [1, 2])
-        self.assertEqual(sort([2, 1]), [1, 2])
-        self.assertEqual(sort(["A", "B"]), ["A", "B"])
-        self.assertEqual(sort(["B", "A"]), ["A", "B"])
-        self.assertEqual(sort(["10", "2"]), ["10", "2"])
-        self.assertEqual(sort(["2", "10"]), ["10", "2"])
-        self.assertEqual(sort([1, 2, 3, 4]), [1, 2, 3, 4])
-        self.assertEqual(sort([4, 3, 2, 1]), [1, 2, 3, 4])
 
     def thorough_sort_tests(self, sorter, max_length=5):
         checker = self.get_sort_checker(sorter)
@@ -85,8 +81,35 @@ class TestSorting(unittest.TestCase):
 
     # todo stability test
 
+    # todo more general def sorter_tester(sorter, in_place, stable)
+
+    def sorter_test(self, sorting_algorithm, in_place, stable):
+        if in_place:
+            def sorter(self, arr, *args, **kwargs):
+                copy = arr.copy()
+                sorting_algorithm(copy, *args, **kwargs)
+                return copy
+        else:
+            sorter = sorting_algorithm
+
+
+
+        # if unstable
+        # make it stable and then test sorting ability vs built in sorted
+        # if stable
+        # test sorting ability
+        # test stability claim
+
+
+
+
+        if not stable:
+            pass
+
     def test_bubblesort(self):
-        self.all_sort_tests(sorting.bubblesort)
+        self.sorter_test(sorting.bubblesort, True, True)
+
+        # self.all_sort_tests(sorting.bubblesort)
 
     def test_selectionsort(self):
         self.basic_sort_tests(sorting.selectionsort)
