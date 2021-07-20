@@ -34,6 +34,18 @@ def sorter_test(sorter, stable, in_place):
     return tester
 
 
+# todo make sure some gaps fail as well, like [2],
+def gapped_sorter_test(sorter, stable, gaps_list):
+    def tester(self):
+        def sorter_with_gaps(gaps):
+            def gapped_sorter(arr, key=None, reverse=False):
+                sorter(arr, key=key, reverse=reverse, gaps=gaps)
+            return gapped_sorter
+        for gaps in gaps_list:
+            sorter_test(sorter_with_gaps(gaps), stable, True)(self)
+    return tester
+
+
 class TestSorting(unittest.TestCase):
 
     def confirm_sorted(self, nip_sorter, arr, key=None, reverse=False):
@@ -128,6 +140,7 @@ class TestSorting(unittest.TestCase):
                 stabilized = sorting.not_in_place(stabilized)
             self.confirm_stability(stabilized, True)
 
+        # todo unpythonic?
         stable_ip_sorter = lambda arr, key=None, reverse=False: arr.sort(key=key, reverse=reverse)
         stable_nip_sorter = sorted
         unstable_ip_sorter = sorting.selectionsort
@@ -139,8 +152,11 @@ class TestSorting(unittest.TestCase):
         confirm_properties(unstable_nip_sorter, False, False)
 
     test_bubblesort = sorter_test(sorting.bubblesort, True, True)
+    test_cocktailsort = sorter_test(sorting.cocktailsort, True, True)
     test_insertionsort = sorter_test(sorting.insertionsort, True, True)
     test_selectionsort = sorter_test(sorting.selectionsort, False, True)
+    test_shellsort = gapped_sorter_test(sorting.shellsort, False, [None, [2, 1], [2, 1, 2]])
+    test_stable_shellsort = gapped_sorter_test(sorting.shellsort, True, [[1], [1, 2]])
 
 
 if __name__ == "__main__":

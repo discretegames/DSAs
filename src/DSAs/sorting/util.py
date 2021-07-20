@@ -8,6 +8,8 @@ def swap(arr, i, j):
     arr[i], arr[j] = arr[j], arr[i]
 
 
+# todo is-sorted checker
+
 @total_ordering
 class Sortable:
     """Helper class for key_and_reverse that represents an object to be sorted."""

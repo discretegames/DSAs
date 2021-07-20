@@ -2,5 +2,5 @@
 
 from subprocess import run
 
-import os
+print('Running tox tests on Python 3.9 only...')
 print('DONE', run('tox -e py39'))
