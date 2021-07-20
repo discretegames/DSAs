@@ -3,7 +3,7 @@
 import tutil  # Must import tutil before DSAs for VSCode debugging to work.
 import unittest
 import DSAs.sorting as sorting
-from itertools import combinations_with_replacement, permutations, product
+from itertools import product
 
 test_maps = (bool,
              float,
@@ -93,14 +93,9 @@ class TestSorting(unittest.TestCase):
     def thorough_sort_tests(self, nip_sorter, maps=test_maps, keys=test_keys, confirmer=None, max_length=5):
         if not confirmer:
             confirmer = self.confirm_sorted
-
-        arrays = set()
-        for length in range(max_length + 1):
-            for combo in combinations_with_replacement(range(length), length):
-                for perm in permutations(combo):  # Probably a better way to get all permutations here.
-                    arrays.add(perm)
-        for arr, map_, key, reverse in product(arrays, maps, keys, [False, True]):
-            confirmer(nip_sorter, list(map(map_, arr)), key=key, reverse=reverse)
+        for length, map_, key, reverse in product(range(max_length + 1), maps, keys, [False, True]):
+            for arr in product(range(length), repeat=length):
+                confirmer(nip_sorter, list(map(map_, arr)), key=key, reverse=reverse)
 
     def random_sort_tests(self, nip_sorter):
         def random_tests(min_length, max_length, min_value, max_value, times=10):
