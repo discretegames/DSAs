@@ -1,5 +1,5 @@
 
-from DSAs.sorting import swap, key_and_reverse
+from DSAs.sorting.util import swap, key_and_reverse
 
 
 @key_and_reverse()

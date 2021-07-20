@@ -86,3 +86,7 @@ def not_in_place(sorting_algorithm):
         sorting_algorithm(copy, *args, **kwargs)
         return copy
     return wrapper
+
+
+def get_gaps(length, shrink_factor):
+    gaps = []

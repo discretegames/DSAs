@@ -25,10 +25,10 @@ def sorter_test(sorter, stable, in_place):
         nonlocal sorter
         self.confirm_in_placeness(sorter, in_place)
         if in_place:
-            sorter = sorting.not_in_place(sorter)
+            sorter = sorting.util.not_in_place(sorter)
         self.confirm_stability(sorter, stable)
         if not stable:
-            sorter = sorting.stabilize(False)(sorter)
+            sorter = sorting.util.stabilize(False)(sorter)
         self.basic_sort_tests(sorter)
         self.thorough_sort_tests(sorter)
         self.random_sort_tests(sorter)
@@ -131,25 +131,25 @@ class TestSorting(unittest.TestCase):
         def confirm_properties(sorter, stable, in_place):
             self.confirm_in_placeness(sorter, in_place)
             if in_place:
-                nip = sorting.not_in_place(sorter)
+                nip = sorting.util.not_in_place(sorter)
                 self.confirm_in_placeness(nip, False)
-                self.confirm_in_placeness(sorting.in_place(nip), True)
+                self.confirm_in_placeness(sorting.util.in_place(nip), True)
                 self.confirm_stability(nip, stable)
             else:
-                ip = sorting.in_place(sorter)
+                ip = sorting.util.in_place(sorter)
                 self.confirm_in_placeness(ip, True)
-                self.confirm_in_placeness(sorting.not_in_place(ip), False)
+                self.confirm_in_placeness(sorting.util.not_in_place(ip), False)
                 self.confirm_stability(sorter, stable)
 
-            stabilized = sorting.stabilize(in_place)(sorter)
+            stabilized = sorting.util.stabilize(in_place)(sorter)
             if in_place:
-                stabilized = sorting.not_in_place(stabilized)
+                stabilized = sorting.util.not_in_place(stabilized)
             self.confirm_stability(stabilized, True)
 
         stable_ip_sorter = lambda arr, key=None, reverse=False: arr.sort(key=key, reverse=reverse)
         stable_nip_sorter = sorted
         unstable_ip_sorter = sorting.selectionsort
-        unstable_nip_sorter = sorting.not_in_place(unstable_ip_sorter)
+        unstable_nip_sorter = sorting.util.not_in_place(unstable_ip_sorter)
 
         confirm_properties(stable_ip_sorter, True, True)
         confirm_properties(stable_nip_sorter, True, False)
