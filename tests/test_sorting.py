@@ -139,6 +139,7 @@ class TestSorting(unittest.TestCase):
         confirm_properties(unstable_nip_sorter, False, False)
 
     test_bubblesort = sorter_test(sorting.bubblesort, True, True)
+    test_insertionsort = sorter_test(sorting.insertionsort, True, True)
     test_selectionsort = sorter_test(sorting.selectionsort, False, True)
 
 
