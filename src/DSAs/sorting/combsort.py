@@ -27,4 +27,4 @@ def combsort(arr, gaps=None, shrink_factor=1.3):
                 swap(arr, i, i + gap)
                 done = False
         i = max(len(arr) - 1, i + 1)
-    # todo something here is broken
+    # TODO something here is broken
