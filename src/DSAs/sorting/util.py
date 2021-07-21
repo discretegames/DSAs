@@ -8,7 +8,17 @@ def swap(arr, i, j):
     arr[i], arr[j] = arr[j], arr[i]
 
 
-# todo is-sorted checker
+# todo test this
+def is_sorted(arr, key=None, reverse=False):
+    if key is not None:
+        arr = list(map(key, arr))
+    if reverse:
+        arr.reverse()
+    for value1, value2 in zip(arr, arr[1:]):
+        if value1 > value2:
+            return False
+    return True
+
 
 @total_ordering
 class Sortable:
@@ -88,7 +98,7 @@ def not_in_place(sorting_algorithm):
     return wrapper
 
 
-def get_gaps(length, shrink_factor):
+def get_gaps(length, shrink_factor=2):
     gaps = []
     while not gaps or gaps[-1] != 1:
         length /= shrink_factor
