@@ -156,6 +156,41 @@ class TestSorting(unittest.TestCase):
         confirm_properties(unstable_ip_sorter, False, True)
         confirm_properties(unstable_nip_sorter, False, False)
 
+    def test_is_sorted(self):
+        is_sorted = sorting.util.is_sorted
+
+        are_sorted = [
+            [],
+            [10],
+            [1, 2, 3],
+            [1, 2, 2],
+            [1, 1, 1],
+            ["Apple", "Banana", "atlas", "xylophone"]
+        ]
+        for arr in are_sorted:
+            self.assertTrue(is_sorted(arr))
+
+        are_not_sorted = [
+            [2, 1],
+            [3, 2, 1],
+            [1e-19, 1e-20],
+            [10, 20, 10],
+            ["dab", "cab"]
+        ]
+        for test in are_not_sorted:
+            self.assertFalse(is_sorted(test))
+
+        self.assertTrue(is_sorted([1, 2, 3], key=bool))
+        self.assertTrue(is_sorted([1, 2, 3], key=bool, reverse=True))
+        self.assertTrue(is_sorted([3, 2, 1], reverse=True))
+
+        self.assertTrue(is_sorted([0, 1, 2], key=bool))
+        self.assertTrue(is_sorted([2, 1, 0], key=bool, reverse=True))
+        self.assertFalse(is_sorted([2, 1, 0], key=bool))
+
+        self.assertTrue(is_sorted([(999, 1), (555, 1), (222, 1)], key=lambda x: x[1]))
+        self.assertFalse(is_sorted([(999, 1), (555, 1), (222, 1)], key=lambda x: x[0]))
+
     test_bubblesort = sorter_test(sorting.bubblesort, True, True)
     test_cocktailsort = sorter_test(sorting.cocktailsort, True, True)
     test_insertionsort = sorter_test(sorting.insertionsort, True, True)
