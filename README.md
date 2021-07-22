@@ -1,13 +1,7 @@
-# DSAs [in development]
+# DSAs
 
 Python 3 implementations of various data structures & algorithms.
 
-Sorting:
+**This project is in development. See src/DSAs for progress so far.**
 
-- Bubble sort
-- Cocktail sort
-- Insertion sort
-- Selection sort
-- Shell sort
-
-More coming soon hopefully.
+More hopefully coming soon.

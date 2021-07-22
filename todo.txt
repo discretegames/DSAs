@@ -2,7 +2,6 @@ Todo List
 ---------
 
 Soon:
-- is_sorted tests
 
 Definitely:
 - docstring everything
