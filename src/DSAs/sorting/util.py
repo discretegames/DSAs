@@ -8,7 +8,6 @@ def swap(arr, i, j):
     arr[i], arr[j] = arr[j], arr[i]
 
 
-# todo test this
 def is_sorted(arr, key=None, reverse=False):
     if key is not None:
         arr = list(map(key, arr))

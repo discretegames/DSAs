@@ -33,7 +33,3 @@ setup(
         "Programming Language :: Python :: 3",
     ]
 )
-
-# TODO LIST
-# - docstrings everywhere
-# - type hinting?

@@ -1,0 +1,31 @@
+Todo List
+---------
+
+Soon:
+- is_sorted tests
+
+Definitely:
+- docstring everything
+- vastly improve readme
+
+Probably:
+- figure out __all__ properly in __init__.pys
+
+Maybe:
+- type hinting
+
+
+DSAs To Add
+-----------
+
+Sorts:
+pigeonholesort
+quicksort
+mergesort
+countingsort
+radixsort
+bucketsort
+stoogesort?
+bogosort?
+more?
+

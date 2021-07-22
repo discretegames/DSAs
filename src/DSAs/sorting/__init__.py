@@ -7,16 +7,3 @@ from .heapsort import heapsort
 from .insertionsort import insertionsort
 from .selectionsort import selectionsort
 from .shellsort import shellsort
-
-
-# TODO
-
-# pigeonholesort
-# quicksort
-# mergesort
-# countingsort
-# radixsort
-# bucketsort
-# stoogesort?
-# bogosort?
-# more?
