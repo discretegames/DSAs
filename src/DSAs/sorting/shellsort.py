@@ -1,6 +1,8 @@
 from DSAs.sorting.util import swap, key_and_reverse
 
 
+# todo skrink_factor, with tests
+
 @key_and_reverse()
 def shellsort(arr, gaps=None):
     """Shell sort. Stable. In place. O(N^2) time (varies). O(1) space besides gaps.

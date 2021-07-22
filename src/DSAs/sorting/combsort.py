@@ -16,15 +16,14 @@ def combsort(arr, gaps=None, shrink_factor=1.3):
     #     for i in range(len(arr) - gap):
     #         if arr[i] > arr[i + gap]:
     #             swap(arr, i, i + gap)
-
     index = 0
     done = False
-    while not done:
-        gap = gaps[index]
+    while index < len(gaps) or not done:
         done = True
+        gap = gaps[index] if index < len(gaps) else gaps[-1]
         for i in range(len(arr) - gap):
             if arr[i] > arr[i + gap]:
                 swap(arr, i, i + gap)
                 done = False
-        i = max(len(arr) - 1, i + 1)
+        index += 1
     # TODO something here is broken

@@ -1,11 +1,12 @@
 """Test suite for DSAs.sorting."""
 
+from unittest.case import expectedFailure
 import tutil  # Must import tutil before DSAs for VSCode debugging to work.
 import unittest
 import DSAs.sorting as sorting
 from itertools import product
 
-thoroughness = 5  # Higher is more thorough but exponentially slower. Keep at 4 minimum.
+thoroughness = 4  # Higher is more thorough but exponentially slower. Keep at 4 or higher.
 test_maps = (int,
              bool,
              float,
@@ -123,8 +124,8 @@ class TestSorting(unittest.TestCase):
 
         random_tests(0, 10, 0, 100, 20)
         random_tests(0, 100, 0, 10, 20)
-        random_tests(200, 500, -10, 10, 5)
-        random_tests(200, 500, -10**9, 10**9, 5)
+        random_tests(200, 500, -10, 10)
+        random_tests(200, 500, -10**9, 10**9)
 
     def test_decorators(self):
         def confirm_properties(sorter, stable, in_place):
@@ -155,18 +156,17 @@ class TestSorting(unittest.TestCase):
         confirm_properties(unstable_ip_sorter, False, True)
         confirm_properties(unstable_nip_sorter, False, False)
 
-    test_bubblesort = sorter_test(sorting.bubblesort, True, True)
-    test_cocktailsort = sorter_test(sorting.cocktailsort, True, True)
-    test_insertionsort = sorter_test(sorting.insertionsort, True, True)
-    test_selectionsort = sorter_test(sorting.selectionsort, False, True)
-    test_heapsort = sorter_test(sorting.heapsort, False, True)
+    # test_bubblesort = sorter_test(sorting.bubblesort, True, True)
+    # test_cocktailsort = sorter_test(sorting.cocktailsort, True, True)
+    # test_insertionsort = sorter_test(sorting.insertionsort, True, True)
+    # test_selectionsort = sorter_test(sorting.selectionsort, False, True)
+    # test_heapsort = sorter_test(sorting.heapsort, False, True)
 
-    test_shellsort = gapped_sorter_test(sorting.shellsort, False, (None, [2, 1], [2, 1, 2], [100, 1]), ([2], [100]))
-    test_stable_shellsort = gapped_sorter_test(sorting.shellsort, True, ([1], [1, 2]), ())
+    # test_shellsort = gapped_sorter_test(sorting.shellsort, False, (None, [2, 1], [2, 1, 2], [100, 1]), ([2], [100]))
+    # test_stable_shellsort = gapped_sorter_test(sorting.shellsort, True, ([1], [1, 2]), ())
 
-    # todo fix combsort
-    # test_combsort = gapped_sorter_test(sorting.combsort, False, (None,), ())
-    # test_stable_combsort = gapped_sorter_test(sorting.combsort, True, ([1], [1, 2]), ())
+    test_combsort = gapped_sorter_test(sorting.combsort, False, (None, [2, 1], [100, 1]), ([2], [100]))
+    test_stable_combsort = gapped_sorter_test(sorting.combsort, True, ([1],), ())
 
 
 if __name__ == "__main__":
