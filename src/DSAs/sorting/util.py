@@ -9,7 +9,7 @@ def swap(arr, i, j):
 
 
 def is_sorted(arr, key=None, reverse=False):
-    if key is not None:
+    if key:
         arr = list(map(key, arr))
     if reverse:
         arr.reverse()

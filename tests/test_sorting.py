@@ -95,7 +95,7 @@ class TestSorting(unittest.TestCase):
             self.random_sort_tests(nip_sorter, mapkeys, confirmer)
             self.assertTrue(failed, "No instability found. The sort may be stable.")
 
-    def basic_sort_tests(self, nip_sorter):  # Doesn't check stability.
+    def basic_sort_tests(self, nip_sorter):
         self.assertEqual(nip_sorter([]), [])
         self.assertEqual(nip_sorter([0]), [0])
         self.assertEqual(nip_sorter([0, 0]), [0, 0])
@@ -209,7 +209,8 @@ class TestSorting(unittest.TestCase):
     test_combsort = gapped_sorter_test(sorting.combsort, False, (None, [2, 1], [100, 1]), ([2], [100]))
     test_stable_combsort = gapped_sorter_test(sorting.combsort, True, ([1],), ())
 
-    test_pigeonholesort = sorter_test(sorting.pigeonholesort, True, True, [(lambda x: x, None)])
+    test_pigeonholesort = sorter_test(sorting.pigeonholesort, True, True,
+                                      [(lambda x: x, None), (lambda x: (f"num{x}", x), lambda x: x[1])])
 
 
 if __name__ == "__main__":

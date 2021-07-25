@@ -2,8 +2,8 @@ def pigeonholesort(arr, key=None, reverse=False):
     """Pigeonhole sort. Stable. In place. O(N + range) time. O(N + range) space."""
     if not arr:
         return
-    keys = arr if key is None else list(map(key, arr))
 
+    keys = list(map(key, arr)) if key else arr
     if reverse:
         keys = [-k for k in keys]
 
@@ -12,8 +12,8 @@ def pigeonholesort(arr, key=None, reverse=False):
     for k, value in zip(keys, arr):
         holes[k - offset].append(value)
 
-    i = 0
+    insert = 0
     for hole in holes:
         for value in hole:
-            arr[i] = value
-            i += 1
+            arr[insert] = value
+            insert += 1
