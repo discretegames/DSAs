@@ -75,7 +75,7 @@ class TestSorting(unittest.TestCase):
             nonlocal incrementer
             incrementer += 1
             return value, incrementer
-        mapkeys = ((mapper, lambda x: x[0]),)
+        mapkeys = [(mapper, lambda x: x[0])]
 
         if stable:
             self.thorough_sort_tests(nip_sorter, mapkeys)
@@ -97,18 +97,24 @@ class TestSorting(unittest.TestCase):
 
     def basic_sort_tests(self, nip_sorter):  # Doesn't check stability.
         self.assertEqual(nip_sorter([]), [])
+        self.assertEqual(nip_sorter([0]), [0])
+        self.assertEqual(nip_sorter([0, 0]), [0, 0])
         self.assertEqual(nip_sorter([1, 2]), [1, 2])
         self.assertEqual(nip_sorter([2, 1]), [1, 2])
-        self.assertEqual(nip_sorter(["A", "B"]), ["A", "B"])
-        self.assertEqual(nip_sorter(["B", "A"]), ["A", "B"])
-        self.assertEqual(nip_sorter(["10", "2"]), ["10", "2"])
-        self.assertEqual(nip_sorter(["2", "10"]), ["10", "2"])
+        self.assertEqual(nip_sorter([-2, -1]), [-2, -1])
+        self.assertEqual(nip_sorter([-1, -2]), [-2, -1])
+        self.assertEqual(nip_sorter([1, 1, 2]), [1, 1, 2])
+        self.assertEqual(nip_sorter([1, 2, 1]), [1, 1, 2])
+        self.assertEqual(nip_sorter([2, 1, 1]), [1, 1, 2])
+        self.assertEqual(nip_sorter([1, 1, 2]), [1, 1, 2])
         self.assertEqual(nip_sorter([1, 2, 3, 4]), [1, 2, 3, 4])
         self.assertEqual(nip_sorter([4, 3, 2, 1]), [1, 2, 3, 4])
+        self.assertEqual(nip_sorter([-2, 2, -1, 1, 0]), [-2, -1, 0, 1, 2])
 
     def thorough_sort_tests(self, nip_sorter, mapkeys=((lambda x: x, None),), confirmer=None):
         if not confirmer:
             confirmer = self.confirm_sorted
+        # TODO True False and below
         for length, mapkey, reverse in product(range(thoroughness + 1), mapkeys, (False, True)):
             for arr in product(range(length), repeat=length):
                 confirmer(nip_sorter, list(map(mapkey[0], arr)), key=mapkey[1], reverse=reverse)
@@ -125,7 +131,7 @@ class TestSorting(unittest.TestCase):
         random_tests(0, 10, 0, 100, 20)
         random_tests(0, 100, 0, 10, 20)
         random_tests(200, 500, -10, 10)
-        random_tests(200, 500, -10**9, 10**9)
+        random_tests(200, 500, -100_000, 100_000)
 
     def test_decorators(self):
         def confirm_properties(sorter, stable, in_place):
@@ -203,7 +209,7 @@ class TestSorting(unittest.TestCase):
     test_combsort = gapped_sorter_test(sorting.combsort, False, (None, [2, 1], [100, 1]), ([2], [100]))
     test_stable_combsort = gapped_sorter_test(sorting.combsort, True, ([1],), ())
 
-    # test_pigeonholesort = sorter_test(sorting.pigeonholesort, True, True)
+    test_pigeonholesort = sorter_test(sorting.pigeonholesort, True, True, [(lambda x: x, None)])
 
 
 if __name__ == "__main__":

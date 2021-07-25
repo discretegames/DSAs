@@ -7,3 +7,4 @@ from .heapsort import heapsort
 from .insertionsort import insertionsort
 from .selectionsort import selectionsort
 from .shellsort import shellsort
+from .pigeonholesort import pigeonholesort
