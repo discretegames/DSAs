@@ -23,7 +23,7 @@ setup(
     project_urls={"GitHub": "https://github.com/discretegames/DSAs",
                   "PyPI": "https://pypi.org/project/DSAs",
                   "TestPyPI": "https://test.pypi.org/project/DSAs"},
-    python_requires='>=3',
+    python_requires='>=3.6',
     classifiers=[
         "Development Status :: 1 - Planning",
         "Intended Audience :: Education",

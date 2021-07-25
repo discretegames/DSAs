@@ -1,27 +1,27 @@
 """Test suite for DSAs.sorting."""
 
-from unittest.case import expectedFailure
 import tutil  # Must import tutil before DSAs for VSCode debugging to work.
 import unittest
 import DSAs.sorting as sorting
 from itertools import product
 
 thoroughness = 4  # Higher is more thorough but exponentially slower. Keep at 4 or higher.
-test_maps = (int,
-             bool,
-             float,
-             lambda x: -x,
-             lambda x: x // 2,
-             lambda x: x**2,
-             lambda _: 0)
-test_keys = (None,
-             str,
-             lambda x: (x + 1, x),
-             lambda x: str(x)[::-1]
-             ) + test_maps
+default_maps = (int,
+                bool,
+                float,
+                lambda x: -x,
+                lambda x: x // 2,
+                lambda x: x**2,
+                lambda _: 0)
+default_keys = (None,
+                str,
+                lambda x: (x + 1, x),
+                lambda x: str(x)[::-1]
+                ) + default_maps
+default_mapkeys = tuple(product(default_maps, default_keys))
 
 
-def sorter_test(sorter, stable, in_place):
+def sorter_test(sorter, stable, in_place, mapkeys=default_mapkeys):
     def tester(self):
         nonlocal sorter
         self.confirm_in_placeness(sorter, in_place)
@@ -31,7 +31,7 @@ def sorter_test(sorter, stable, in_place):
         if not stable:
             sorter = sorting.util.stabilize(False)(sorter)
         self.basic_sort_tests(sorter)
-        self.thorough_sort_tests(sorter)
+        self.thorough_sort_tests(sorter, mapkeys)
         self.random_sort_tests(sorter)
     return tester
 
@@ -75,10 +75,10 @@ class TestSorting(unittest.TestCase):
             nonlocal incrementer
             incrementer += 1
             return value, incrementer
-        maps, keys = [mapper], [lambda x: x[0]]
+        mapkeys = ((mapper, lambda x: x[0]),)
 
         if stable:
-            self.thorough_sort_tests(nip_sorter, maps, keys)
+            self.thorough_sort_tests(nip_sorter, mapkeys)
         else:
             failed = False
 
@@ -91,8 +91,8 @@ class TestSorting(unittest.TestCase):
                     if expected != actual:  # When unstable some failures should happen.
                         nonlocal failed
                         failed = True
-            self.thorough_sort_tests(nip_sorter, maps, keys, confirmer)
-            self.random_sort_tests(nip_sorter, maps, keys, confirmer)
+            self.thorough_sort_tests(nip_sorter, mapkeys, confirmer)
+            self.random_sort_tests(nip_sorter, mapkeys, confirmer)
             self.assertTrue(failed, "No instability found. The sort may be stable.")
 
     def basic_sort_tests(self, nip_sorter):  # Doesn't check stability.
@@ -106,21 +106,21 @@ class TestSorting(unittest.TestCase):
         self.assertEqual(nip_sorter([1, 2, 3, 4]), [1, 2, 3, 4])
         self.assertEqual(nip_sorter([4, 3, 2, 1]), [1, 2, 3, 4])
 
-    def thorough_sort_tests(self, nip_sorter, maps=test_maps, keys=test_keys, confirmer=None):
+    def thorough_sort_tests(self, nip_sorter, mapkeys=((lambda x: x, None),), confirmer=None):
         if not confirmer:
             confirmer = self.confirm_sorted
-        for length, map_, key, reverse in product(range(thoroughness + 1), maps, keys, (False, True)):
+        for length, mapkey, reverse in product(range(thoroughness + 1), mapkeys, (False, True)):
             for arr in product(range(length), repeat=length):
-                confirmer(nip_sorter, list(map(map_, arr)), key=key, reverse=reverse)
+                confirmer(nip_sorter, list(map(mapkey[0], arr)), key=mapkey[1], reverse=reverse)
 
-    def random_sort_tests(self, nip_sorter, maps=(lambda x: x,), keys=(None,), confirmer=None):
+    def random_sort_tests(self, nip_sorter, mapkeys=((lambda x: x, None),), confirmer=None):
         if not confirmer:
             confirmer = self.confirm_sorted
 
         def random_tests(min_len, max_len, min_val, max_val, times=10):
-            for map_, key, reverse, _ in product(maps, keys, (False, True), range(times)):
+            for _, mapkey, reverse in product(range(times), mapkeys, (False, True)):
                 arr = tutil.random_arr(min_len, max_len, min_val, max_val)
-                confirmer(nip_sorter, list(map(map_, arr)), key=key, reverse=reverse)
+                confirmer(nip_sorter, list(map(mapkey[0], arr)), key=mapkey[1], reverse=reverse)
 
         random_tests(0, 10, 0, 100, 20)
         random_tests(0, 100, 0, 10, 20)
@@ -202,6 +202,8 @@ class TestSorting(unittest.TestCase):
 
     test_combsort = gapped_sorter_test(sorting.combsort, False, (None, [2, 1], [100, 1]), ([2], [100]))
     test_stable_combsort = gapped_sorter_test(sorting.combsort, True, ([1],), ())
+
+    # test_pigeonholesort = sorter_test(sorting.pigeonholesort, True, True)
 
 
 if __name__ == "__main__":
