@@ -117,7 +117,7 @@ class TestSorting(unittest.TestCase):
         # TODO True False and below
         for length, mapkey, reverse in product(range(thoroughness + 1), mapkeys, (False, True)):
             for arr in product(range(length), repeat=length):
-                confirmer(nip_sorter, list(map(mapkey[0], arr)), key=mapkey[1], reverse=reverse)
+                confirmer(nip_sorter, [mapkey[0](value) for value in arr], key=mapkey[1], reverse=reverse)
 
     def random_sort_tests(self, nip_sorter, mapkeys=((lambda x: x, None),), confirmer=None):
         if not confirmer:
@@ -126,7 +126,7 @@ class TestSorting(unittest.TestCase):
         def random_tests(min_len, max_len, min_val, max_val, times=10):
             for _, mapkey, reverse in product(range(times), mapkeys, (False, True)):
                 arr = tutil.random_arr(min_len, max_len, min_val, max_val)
-                confirmer(nip_sorter, list(map(mapkey[0], arr)), key=mapkey[1], reverse=reverse)
+                confirmer(nip_sorter, [mapkey[0](value) for value in arr], key=mapkey[1], reverse=reverse)
 
         random_tests(0, 10, 0, 100, 20)
         random_tests(0, 100, 0, 10, 20)

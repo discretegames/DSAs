@@ -10,7 +10,7 @@ def swap(arr, i, j):
 
 def is_sorted(arr, key=None, reverse=False):
     if key:
-        arr = list(map(key, arr))
+        arr = [key(value) for value in arr]
     if reverse:
         arr.reverse()
     for value1, value2 in zip(arr, arr[1:]):

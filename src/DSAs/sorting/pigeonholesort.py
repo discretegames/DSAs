@@ -1,9 +1,14 @@
 def pigeonholesort(arr, key=None, reverse=False):
-    """Pigeonhole sort. Stable. In place. O(N + range) time. O(N + range) space."""
+    """Pigeonhole sort. Stable. In place. O(N + range) time. O(N + range) space.
+
+    Pigeonhole sort, similar to counting sort, is not a comparison sort.
+    If key is None, arr should only contain integers. If key is not None it must
+    be a function that returns an integer over the possible range of key values.
+    """
     if not arr:
         return
 
-    keys = list(map(key, arr)) if key else arr
+    keys = [key(value) for value in arr] if key else arr
     if reverse:
         keys = [-k for k in keys]
 
