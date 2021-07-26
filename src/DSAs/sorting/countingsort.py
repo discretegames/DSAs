@@ -14,14 +14,14 @@ def countingsort(arr):
         for i in range(1, len(counts)):  # Accumulate prefix sums.
             counts[i] += counts[i - 1]
 
-        for value in arr: # Build out from 
+        for value in arr:  # Build out from
             counts[value - offset] -= 1
             out[counts[value - offset]] = value
 
     return out
 
 
-def countingsort_alt(arr):
+def countingsort_alt(arr):  # works but not for radix sort
     if arr:
         offset = min(arr)
         counts = [0] * (max(arr) - offset + 1)

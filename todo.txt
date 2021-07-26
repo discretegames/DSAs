@@ -18,9 +18,7 @@ DSAs To Add
 -----------
 
 Sorts:
-pigeonholesort
 quicksort
-mergesort
 countingsort
 radixsort
 bucketsort
