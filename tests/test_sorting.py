@@ -206,6 +206,9 @@ class TestSorting(unittest.TestCase):
     test_mergesort = sorter_test(sorting.mergesort, True, True)
     test_mergesort_basic = sorter_test(sorting.mergesort_basic, True, False)
 
+    test_quicksort = sorter_test(sorting.quicksort, False, True)
+    test_quicksort_basic = sorter_test(sorting.quicksort_basic, True, False)
+
     test_shellsort = gapped_sorter_test(sorting.shellsort, False, (None, [2, 1], [2, 1, 2], [100, 1]), ([2], [100]))
     test_stable_shellsort = gapped_sorter_test(sorting.shellsort, True, ([1], [1, 2]), ())
 

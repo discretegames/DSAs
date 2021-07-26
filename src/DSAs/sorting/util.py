@@ -8,6 +8,14 @@ def swap(arr, i, j):
     arr[i], arr[j] = arr[j], arr[i]
 
 
+def default_left_right(arr, left, right):
+    if left is None:
+        left = 0
+    if right is None:
+        right = len(arr) - 1
+    return left, right
+
+
 def is_sorted(arr, key=None, reverse=False):
     if key:
         arr = [key(value) for value in arr]

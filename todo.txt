@@ -18,7 +18,8 @@ DSAs To Add
 -----------
 
 Sorts:
-quicksort
+iterative mergesort?
+median quicksort?
 countingsort
 radixsort
 bucketsort

@@ -1,12 +1,4 @@
-from DSAs.sorting.util import key_and_reverse
-
-
-def default_left_right(arr, left, right):
-    if left is None:
-        left = 0
-    if right is None:
-        right = len(arr) - 1
-    return left, right
+from DSAs.sorting.util import key_and_reverse, default_left_right
 
 
 def merge_in_place(arr, left, middle, right):
